@@ -6,14 +6,15 @@
 import re, os
 
 def main():
-    file_contents = []
-    for i in os.listdir('export/'):
+    os.chdir('export/')
+    filename = open('../pages.export', 'a+')
+    for i in os.listdir('.'):
         if i.endswith(".html"):
             content = open(str(i)).read()
-            findSpecialPages = re.compile('title="(\w.*?)"').findall
-            file_contents.append(findSpecialPages)
-        print(file_contents)
-
+            page_regex = re.findall('title="(\w.*?)"', content)
+    print('Appending content to pages.export ...')
+    filename.write("\n".join(page_regex))
+    filename.close()
 
 
 
