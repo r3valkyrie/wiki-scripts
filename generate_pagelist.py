@@ -6,7 +6,11 @@
 import re, os
 
 def generate_pagelist():
-    os.chdir('export/')
+    if os.path.exists('export/'):
+        os.chdir('export/')
+    else:
+        os.makedirs('export/')
+        os.chdir('export/')
     filename = open('../pages.export', 'w+')
     for i in os.listdir('.'):
         if i.endswith(".html"):
