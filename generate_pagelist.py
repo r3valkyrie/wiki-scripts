@@ -7,7 +7,7 @@ import re, os
 
 def generate_pagelist():
     os.chdir('export/')
-    filename = open('../pages.export', 'a+')
+    filename = open('../pages.export', 'w+')
     for i in os.listdir('.'):
         if i.endswith(".html"):
             content = open(str(i)).read()

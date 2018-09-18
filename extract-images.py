@@ -1,6 +1,6 @@
 #!/bin/env python3
 #
-# Extracts image urls from provided urls, then downloads each image to a directory.
+# Extracts image urls from the /tg/ wiki
 #
 # Usage: ./extract-images.py [URL]
 #
@@ -39,21 +39,28 @@ def url_extract(url):
 # Generate links to each wiki page we're downloading (all of them)
 def main():
     generate_pagelist.generate_pagelist()
-
+    filename = open('../pages.export', 'r').read()
+    articles_list = filename.splitlines()
+    articles_formatted = []
+    print(articles_list)
+    for x in articles_list:
+        articles_formatted.append("https://tgstation13.org/wiki/" + x)
+    for meme in articles_formatted:
+        nice(meme)
 
 
 
 # Create directories, initialize everything.
-def initialize(wiki_url):
+def nice(meme):
     wiki_url = sys.argv[1]
     img_dir = '../extracted-images/'
     if os.path.exists("../extracted-images/"):
         os.chdir(img_dir)
-        url_extract(wiki_url)
+        url_extract(meme)
     else:
         os.makedirs(img_dir)
         os.chdir(img_dir)
-        url_extract(wiki_url)
+        url_extract(meme)
 
 
 if __name__ == "__main__":
