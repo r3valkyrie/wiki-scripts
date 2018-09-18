@@ -5,7 +5,7 @@
 
 import re, os
 
-def main():
+def generate_pagelist():
     os.chdir('export/')
     filename = open('../pages.export', 'a+')
     for i in os.listdir('.'):
@@ -19,4 +19,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    generate_pagelist()
+

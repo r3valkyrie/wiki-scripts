@@ -8,6 +8,7 @@
 import re
 import urllib.request
 import sys, os
+import generate_pagelist
 from bs4 import BeautifulSoup
 
 def dl_from_array(images_formatted):
@@ -34,8 +35,9 @@ def url_extract(url):
 
 def main():
     wiki_url = sys.argv[1]
-    img_dir = 'extracted-images/'
-    if os.path.exists("extracted-images/"):
+    img_dir = '../extracted-images/'
+    generate_pagelist.generate_pagelist()
+    if os.path.exists("../extracted-images/"):
         os.chdir(img_dir)
         url_extract(wiki_url)
     else:
