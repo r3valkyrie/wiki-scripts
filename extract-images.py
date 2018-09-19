@@ -51,8 +51,11 @@ def dl_from_array(images_formatted):
     for url in images_formatted:
         print("Retrieving " + url)
         filename = url.rsplit('/', 1)[-1]
-        print("... \nSaving as " + filename)
-        urllib.request.urlretrieve(url, filename)
+        directory = url.rsplit('/', 3)[-3] + '/' + url.rsplit('/', 2)[-2] + '/'
+        print("... \nSaving as " + filename + ' to directory ' + directory)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        urllib.request.urlretrieve(url, directory + filename)
 
 # Append the image path to the url, forming a direct link to the image.
 def format_attrs(images):
