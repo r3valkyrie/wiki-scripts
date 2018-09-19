@@ -58,11 +58,11 @@ def dl_from_array(images_formatted, img_dir):
     for url in images_formatted:
         filename = url.rsplit('/', 1)[-1]
         directory = img_dir + url.rsplit('/', 3)[-3] + '/' + url.rsplit('/', 2)[-2] + '/'
-        print(directory)
         if not os.path.exists(directory):
             os.makedirs(directory)
         if not os.path.exists(directory + filename):
-            print("... \nSaving " + filename + ' to directory ' + directory)
+            print("... \nSaving " + filename + ' to:')
+            print(directory)
             urllib.request.urlretrieve(url, directory + filename)
         else:
             print('... \n' + directory + filename + " seems to exist, skipping...")
