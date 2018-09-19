@@ -25,7 +25,7 @@ def main():
 # Create directories, initialize everything.
 
 def nice(meme):
-    wiki_url = sys.argv[1]
+    # wiki_url = sys.argv[1] # Removing temporarily
     img_dir = '../extracted-images/'
     if os.path.exists("../extracted-images/"):
         os.chdir(img_dir)
@@ -45,7 +45,6 @@ def url_extract(url):
     images = [img['src'] for img in soup.find_all('img')]
 
     format_attrs(images)
-
 
 # Download our images via direct link.
 def dl_from_array(images_formatted):

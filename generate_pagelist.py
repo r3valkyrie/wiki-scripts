@@ -11,13 +11,15 @@ def generate_pagelist():
     else:
         os.makedirs('export/')
         os.chdir('export/')
-    filename = open('../pages.export', 'w+')
+    if os.path.exists('../pages.export'):
+        os.remove('../pages.export')
+    filename = open('../pages.export', 'a+')
     for i in os.listdir('.'):
         if i.endswith(".html"):
             content = open(str(i)).read()
             page_regex = re.findall('title="(\w.*?)"', content)
-    print('Appending content to pages.export ...')
-    filename.write("\n".join(page_regex))
+            print('Appending ' + i + ' to pages.export ...')
+            filename.write("\n".join(page_regex))
     filename.close()
 
 
