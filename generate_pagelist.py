@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 #
 # Generates a list of pages to export from Mediawiki by iterating through html files in the 'export' directory.
 #
