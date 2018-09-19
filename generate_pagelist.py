@@ -20,9 +20,8 @@ def generate_pagelist():
             page_regex = re.findall('title="(\w.*?)"', content)
             print('Appending ' + i + ' to pages.export ...')
             filename.write("\n".join(page_regex))
+
     filename.close()
-
-
 
 if __name__ == "__main__":
     generate_pagelist()

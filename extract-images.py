@@ -12,9 +12,9 @@ from bs4 import BeautifulSoup
 
 # Fetches the pages we'll scrape and formats them.
 def main():
-    generate_pagelist.generate_pagelist()
-    filename = open('../pages.export', 'r').read()
-    articles_list = filename.splitlines()
+    with open('pages.export') as filename:
+        filename_formatted = filename.read().replace(" ", "_")
+    articles_list = filename_formatted.splitlines()
     articles_formatted = []
     print(articles_list)
     for x in articles_list:
@@ -26,18 +26,17 @@ def main():
 
 def nice(meme):
     # wiki_url = sys.argv[1] # Removing temporarily
-    img_dir = '../extracted-images/'
-    if os.path.exists("../extracted-images/"):
-        os.chdir(img_dir)
-        url_extract(meme)
+    img_dir = os.path.dirname(os.path.realpath(__file__)) + "/extracted-images/"
+    if os.path.exists(img_dir):
+        url_extract(meme, img_dir)
     else:
         os.makedirs(img_dir)
-        os.chdir(img_dir)
-        url_extract(meme)
+        url_extract(meme, img_dir)
 
 # Extract image urls from parsed html.
 
-def url_extract(url):
+def url_extract(url, img_dir):
+    os.chdir(img_dir)
     print('!! DOWNLOADING FROM ' + url + ' !!')
     response = urllib.request.urlopen(url, data=None)
     html = response.read()
@@ -46,17 +45,6 @@ def url_extract(url):
 
     format_attrs(images)
 
-# Download our images via direct link.
-def dl_from_array(images_formatted):
-    for url in images_formatted:
-        print("Retrieving " + url)
-        filename = url.rsplit('/', 1)[-1]
-        directory = url.rsplit('/', 3)[-3] + '/' + url.rsplit('/', 2)[-2] + '/'
-        print("... \nSaving as " + filename + ' to directory ' + directory)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        urllib.request.urlretrieve(url, directory + filename)
-
 # Append the image path to the url, forming a direct link to the image.
 def format_attrs(images):
     images_formatted = []
@@ -64,6 +52,20 @@ def format_attrs(images):
         images_formatted.append("https://tgstation13.org" + img)
 
     dl_from_array(images_formatted)
+
+# Download our images via direct link.
+def dl_from_array(images_formatted):
+    for url in images_formatted:
+        filename = url.rsplit('/', 1)[-1]
+        directory = url.rsplit('/', 3)[-3] + '/' + url.rsplit('/', 2)[-2] + '/'
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        if not os.path.exists(directory + filename):
+            print("... \nSaving " + filename + ' to directory ' + directory)
+            urllib.request.urlretrieve(url, directory + filename)
+        else:
+            print('... \n' + directory + filename + " seems to exist, skipping...")
+
 
 if __name__ == "__main__":
     main()
