@@ -57,7 +57,7 @@ def format_attrs(images, img_dir):
 def dl_from_array(images_formatted, img_dir):
     for url in images_formatted:
         filename = url.rsplit('/', 1)[-1]
-        directory = img_dir + url.rsplit('/', 3)[-3] + '/' + url.rsplit('/', 2)[-2] + '/'
+        directory = img_dir
         if not os.path.exists(directory):
             os.makedirs(directory)
         if not os.path.exists(directory + filename):
